@@ -1,0 +1,13 @@
+<p class="notice-message"><%= notice %></p>
+
+<div class="event-details-container">
+  <%= render @event %>
+
+  <div class="event-actions">
+    <%= link_to "Edit this event", edit_event_path(@event), class: "event-link edit-link" %> |
+    <%= link_to "Back to events", events_path, class: "event-link back-link" %>
+
+    <%= button_to "Destroy this event", @event, method: :delete, class: "btn btn-danger delete-button" %>
+  </div>
+
+

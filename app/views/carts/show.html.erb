@@ -1,0 +1,10 @@
+<p class="cart-notice"><%= notice %></p>
+
+<%= render @cart %>
+<br><br>
+<div class="edit_cart">
+  <%= link_to "Edit this cart", edit_cart_path(@cart)%>
+  <%= link_to "Back to carts", carts_path %>
+
+  <%= button_to "Destroy this cart", @cart, method: :delete, class: "sh", data: { confirm: "Are you sure?" } %>
+</div>

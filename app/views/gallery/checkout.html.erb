@@ -1,0 +1,63 @@
+<%= flash[:notice] %>
+<br />
+
+<div class="checkout-container">
+  <%= form_with url: "/gallery/checkout", method: :post, html: { class: "checkout-form" } do |f| %>
+<h3>Initial Payment (40%): ₹ <%= session[:amount].to_f.round(2) %></h3>
+    <br>
+
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, value: current_user.name, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :credit_card_no, "Credit Card Number" %><br />
+      <%= f.text_field :credit_no, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :date_of_expiry, "Date of Expiry" %><br />
+      <select name="check[month]" id="check_out_month">
+        <option selected value="01">January</option>
+        <option value="02">February</option>
+        <option value="03">March</option>
+        <option value="04">April</option>
+        <option value="05">May</option>
+        <option value="06">June</option>
+        <option value="07">July</option>
+        <option value="08">August</option>
+        <option value="09">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+
+      <select name="check[year]" id="check_out_year">
+        <option selected value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+        <option value="2031">2031</option>
+        <option value="2032">2032</option>
+        <option value="2033">2033</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <%= f.label :verification_number, "CVV" %><br />
+      <%= f.text_field :verification_number, required: true %>
+    </div>
+
+    <br /><br />
+    
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+
+    
+
+  <% end %>
+</div>

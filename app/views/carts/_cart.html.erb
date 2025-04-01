@@ -1,0 +1,44 @@
+<div id="<%= dom_id cart %>">
+<% unless cart.line_items.empty? %>
+<div class="cart_container">
+  <div class="cart_title">Your Cart</div>
+
+  <table class="cart_table">
+    <tr>
+        <th class="col-quantity">Quantity</th>
+        <th class="col-event">Image</th>
+        <th class="col-event">Event Name</th>
+        <th class="col-price">Price per Ticket</th>
+        <th class="col-total">Total Price</th>
+    </tr>
+
+    <%= render(cart.line_items) %>
+  <table class="cart_table">
+    <tr>
+      <td colspan="3" class="total_label">Total</td>
+      <td class="total_cell "><%= number_to_indian_currancy(cart.total_price) %></td>
+    </tr
+    </table>
+  </table>
+
+  <% session[:amount] = cart.total_price %>
+
+  <div class="cart_actions">
+    <%= button_to 'Empty Cart', cart, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    <%= link_to "Continue Shopping", { controller: "gallery", action: "index" }, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<% end %>
+
+<div class="checkout_section">
+  <% if user_signed_in? %>
+  <%= link_to "Register for Event", new_event_registration_path, class: "btn btn-primary register-button" %>
+  <% else %>
+    <%= link_to "signIn", new_user_session_path, class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+</div>
+
+

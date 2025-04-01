@@ -1,0 +1,37 @@
+<h2 class="registered-users-title">Registered Users</h2>
+
+<div class="registered-users-container">
+  <table class="registered-users-table">
+
+    <thead>
+      <tr>
+        <th>User Name</th>
+        <th>Event Title</th>
+        <th>contact</th>
+        <th>Date</th>
+        <th>Organizer</th>
+        <th>Status</th>
+        <th>Total Amount</th>
+        <th>Initial payment</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @event_registrations.each do |registration| %>
+        <tr>
+          <td><%= registration.user.name %></td>
+          <td><%= registration.event.title %></td>
+          <td><%= registration.user.contact %></td>
+          <td><%= registration.date %></td>
+          <td><%= registration.event.organizer&.name || "Not Assigned" %></td>
+
+          <td class="<%= registration.status == 'completed' ? 'status-completed' : 'status-pending' %>">
+            <%= registration.status %>
+          </td>
+          <td>₹ <%= registration.amount_due %></td>
+          <td>₹ <%= registration.amount_paid %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

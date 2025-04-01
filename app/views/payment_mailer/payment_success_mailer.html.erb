@@ -1,0 +1,19 @@
+<h1>Payment Confirmation</h1>
+<p>Dear <%= @user.name %>,</p>
+
+<p>We have received your <strong><%= @payment_type %></strong> for the following events:</p>
+
+<ul>
+  <% @registrations.each do |registration| %>
+    <li>
+      <strong><%= registration.event.title %></strong> on 
+      <%= registration.date %> at <%= registration.time %>
+    </li>
+  <% end %>
+</ul>
+
+<p>Total Paid: <strong>₹<%= @amount %></strong></p>
+
+<p>Thank you for choosing EventEase!</p>
+<p>Best Regards,<br>EventEase Team</p>
+

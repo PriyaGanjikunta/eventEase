@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2025-03-13
+  time: 2025-03-13 16:07:54
+  user: one
+  event: one
+  payment: one
+
+two:
+  date: 2025-03-13
+  time: 2025-03-13 16:07:54
+  user: two
+  event: two
+  payment: two

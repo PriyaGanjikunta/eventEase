@@ -1,0 +1,18 @@
+<p class="notice-message"><%= notice %></p>
+
+<h1 class="events-title">All Events</h1>
+
+<div class="events-container">
+  <% @events.each do |event| %>
+    <div class="event-card">
+      <%= render event %>
+      <p>
+        <%= link_to "Show this event", event, class: "event-button" %>
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<div class="new-event-container">
+  <%= link_to "Create New Event", new_event_path, class: "btn btn-success new-event-button" %>
+</div>

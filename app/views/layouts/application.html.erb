@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pro</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+  </head>
+
+  <body>
+
+    <header class="top-area">
+      <div class="header-area">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-default bootsnav navbar-fixed dark no-background">
+          <div class="container">
+          
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">EventEase</a>
+            </div>
+            <!-- End Header Navigation -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+              <ul class="nav navbar-nav navbar-left" data-in="fadeInDown" data-out="fadeOutUp">
+              
+              </ul>
+
+              <!-- Authentication Links (Aligned to Right) -->
+              <ul class="nav navbar-nav navbar-right">
+              <li class="smooth_menu"><a href="/gallery/index">Home</a></li>
+              <li class="smooth_menu"><a href="#skills">About Us</a></li>
+              <li class="smooth_menu"><a href="/carts/<%= session[:cart_id] %>">Cart</a></li>
+
+              <% if current_user&.role == "organizer" %>
+                <li><%= link_to "Dashboard", dashboard_path %></li>
+              <% end %>
+
+
+              <% if user_signed_in? %>
+                <li><%= link_to "History", user_dashboard_path, class: "nav-link" %></li>
+              <% end %>
+
+                <% if user_signed_in? %>
+                  <li class="smooth_menu"><%= link_to "Edit Profile", edit_user_registration_path %></li>
+                  <li><%= button_to "LOGOUT", destroy_user_session_path, method: :delete, class: "main_btn" %></li>
+                <% else %>
+                  <li class="smooth_menu"><%= link_to "Sign Up", new_user_registration_path %></li>
+                  <li><%= button_to "LOGIN", new_user_session_path, class: "main_btn" %></li>
+                <% end %>
+
+                
+                <% if user_signed_in? %>
+                  <div>
+                    <!-- Circular Profile Button -->
+                    <button class="profile-circle" id="profileBtn">
+                      <%= current_user.name.first.upcase %>
+                    </button>
+                  </div>
+                <% end %>
+
+                <!-- User Details Modal -->
+                <div id="userModal" class="modal">
+                  <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>User Details</h3>
+                    <p><strong>Name:</strong> <%= current_user.name %></p>
+                    <p><strong>Email:</strong> <%= current_user.email %></p>
+                    <p><strong>Contact:</strong> <%= current_user.contact %></p>
+                    <p><strong>Role:</strong> <%= current_user.role %></p>
+                  </div>
+                </div>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="clearfix"></div>
+    </header>
+<br><br><br><br><br><br>
+
+    <%= yield %>
+
+  </body>
+</html>

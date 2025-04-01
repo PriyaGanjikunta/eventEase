@@ -1,0 +1,10 @@
+<h1 class="edit-event-title">Editing Event</h1>
+
+<div class="edit-event-container">
+  <%= render "form", event: @event %>
+</div>
+
+<div class="edit-event-links">
+  <%= link_to "Show this event", @event, class: "btn-link show-event-link" %> |
+  <%= link_to "Back to events", events_path, class: "btn-link back-events-link" %>
+</div>

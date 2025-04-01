@@ -1,0 +1,46 @@
+<div class="featured section container" id="featured">
+  <% if current_user.event_registrations.where(status: "initial payment done").exists? %>
+    <%= link_to "Final_Payment", gallery_final_checkout_path, class: "smooth_menu_gallery" %>
+  <% end %>
+
+  <h2 class="section-title">Event Essentials</h2>
+  <br><br>
+
+  <% @event_gallery.group_by(&:category).each do |category, events| %>
+    <h3 class="category-title"><%= category %></h3>
+    <div class="featured__container gl_btn">
+      <% events.each do |event| %>
+        <div class="featured__card">
+          <div class="event-description">
+            <p><%= event.description %></p>
+          </div>
+
+          <%= image_tag event.event_image, class: "featured__image" %>
+
+          <div class="featured__data">
+            <h3 class="featured__title gl_btn"><%= event.title %></h3>
+            <span class="featured__price gl_btn">₹ <%= event.price %></span>
+            
+            <%= form_with url: line_items_path, method: :post, local: true, class: "cart-form" do |f| %>
+              <%= f.hidden_field :event_id, value: event.id %>
+              
+              <% if event.category == "food" || event.category == "beautician" %>
+                <div class="quantity-container">
+                  <label for="quantity">Qty:</label>
+                  <%= f.number_field :quantity, value: 1, min: 1, class: "quantity-input" %>
+                </div>
+            <% else %>
+              <%= f.hidden_field :quantity, value: 1 %> <%# Default quantity to 1 for full packages %>
+            <% end %>
+              <br>
+              <%= f.submit "Add to Cart", class: "btn_g add-to-cart-btn gl_btn" %>
+            <% end %>
+
+            
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <br><br><br><br><br>
+  <% end %>
+</div>

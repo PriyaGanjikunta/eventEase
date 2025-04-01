@@ -1,0 +1,28 @@
+<h2 class="dashboard-title">My Event Registrations</h2>
+
+<table class="dashboard-table">
+  <thead>
+    <tr>
+      <th>Event Name</th>
+      <th>Event Date</th>
+      <th>Total Amount</th>
+      <th>Amount Paid</th>
+      <th>Remaining Amount (60%)</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_registrations.each do |registration| %>
+      <tr>
+        <td><%= registration.event.title %></td>
+        <td><%= registration.date %></td>
+        <td>₹<%= registration.amount_due %></td>
+        <td>₹<%= registration.amount_paid %></td>
+        <td>₹<%= registration.amount_due - registration.amount_paid %></td>
+        <td class="<%= registration.status == 'completed' ? 'status-completed' : 'status-pending' %>">
+          <%= registration.status %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

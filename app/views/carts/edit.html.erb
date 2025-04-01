@@ -1,0 +1,12 @@
+<div class="cart-links_edit">
+  <h1>Editing cart</h1>
+
+  <%= render "form", cart: @cart %>
+
+  <br />
+</div>
+<div class="edit_cart">
+  <%= link_to "Show this cart", @cart %> |
+  <%= link_to "Back to carts", carts_path %>
+</div>
+

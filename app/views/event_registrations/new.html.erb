@@ -1,0 +1,57 @@
+<h2 class="hd">Register for Events</h2>
+
+<div class="event-registration-container">
+  <%= form_with url: event_registrations_path, local: true, html: { class: "event-registration-form" } do |f| %>
+
+      <div>
+    <%= label_tag "selected_organizer", "Select an Organizer" %>
+    <%= select_tag "event_registration[organizer_id]", 
+        options_from_collection_for_select(@organizers, "id", "name"), 
+        prompt: "Choose an organizer", required: true %>
+</div>
+
+      
+      <div>
+          <%= label_tag "event_registrations[][date]", "Event Date" %>
+          <%= date_field_tag "event_registrations[][date]", nil, required: true %>
+      </div>
+
+      <div>
+          <%= label_tag "event_registrations[][time]", "Event Time" %>
+          <%= time_field_tag "event_registrations[][time]", nil, required: true %>
+      </div>
+
+      <div>
+          <%= label_tag "event_registrations[][user_details]", "Your Details" %>
+          <%= text_area_tag "event_registrations[][user_details]", current_user.name, required: true, class: "small-text-area" %>
+      </div>
+
+      <% total_price = 0 %>
+
+      <% @cart_items.each do |cart_item| %>
+    <% item_total = cart_item.event.price * cart_item.quantity %>
+    <% total_price += item_total %>
+
+    <fieldset>
+        <legend>
+          <div class="event_new">
+            <%= cart_item.event.title %>  
+            (₹<%= cart_item.event.price %> x <%= cart_item.quantity %> = ₹<%= item_total %>)
+          </div>
+        </legend>
+
+        <%= hidden_field_tag "event_registrations[][event_id]", cart_item.event.id %>
+        <%= hidden_field_tag "event_registrations[][quantity]", cart_item.quantity %>  <%# ✅ Added this %>
+    </fieldset>
+<% end %>
+
+
+      <div class="grand-total">
+          <strong>Grand Total: ₹<%= total_price %></strong>
+      </div>
+
+      <%= f.submit "Register & Proceed to Checkout", class: "btn btn-success" %>
+
+
+  <% end %>
+</div>

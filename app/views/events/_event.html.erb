@@ -1,0 +1,31 @@
+<div id="<%= dom_id event %>" class="event-card">
+  <div class="event-image">
+    <%= image_tag event.event_image, class: "event-thumbnail" %>
+  </div>
+
+  <div class="event-details">
+    <p class="event-info">
+      <strong>Title:</strong> <%= event.title %>
+    </p>
+
+    <p class="event-info">
+      <strong>Category:</strong> <%= event.category %>
+    </p>
+
+    <p class="event-info">
+      <strong>Description:</strong> <%= event.description %>
+    </p>
+
+    <p class="event-info">
+      <strong>Price:</strong> <%= number_to_indian_currancy(event.price) %>
+    </p>
+
+    <p class="event-info">
+      <strong>Location:</strong> <%= event.location %>
+    </p>
+
+    <p class="event-info">
+      <strong>Organizer:</strong> <%= event.organizer_id %>
+    </p>
+  </div>
+</div>

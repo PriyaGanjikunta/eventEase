@@ -1,0 +1,51 @@
+<div class="signup-container">
+  <h2>Sign Up</h2>
+
+  <!-- Display error messages -->
+  <% if resource.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(resource.errors.count, "error") %> prohibited this user from being saved:</h3>
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for(resource, as: resource_name, url: user_registration_path) do |f| %>
+    <div>
+      <%= f.label :name, "Full Name" %>
+      <%= f.text_field :name, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :email %>
+      <%= f.email_field :email, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :contact, "Contact Number" %>
+      <%= f.text_field :contact, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :password %>
+      <%= f.password_field :password, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.password_field :password_confirmation, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :role, "Select Role" %>
+      <%= f.select :role, options_for_select([["User", "user"], ["Organizer", "organizer"]], selected: "user") %>
+    </div>
+
+    <div>
+      <%= f.submit "Sign Up" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,87 @@
+<%= flash[:notice] %>
+<br />
+
+<div class="checkout-container">
+  <%= form_with url: "/gallery/final_checkout", method: :post, html: { class: "final_checkout-form" } do |f| %>
+
+    <h3>Final Payment (60%): ₹ <span id="remaining-amount">
+      <%= @selected_registration ? @selected_registration.amount_due - @selected_registration.amount_paid : 0 %>
+    </span></h3>
+    <br>
+
+    <% if @event_registrations.count > 1 %>
+      <div class="field">
+        <%= f.label :selected_event, "Select Event" %><br />
+        <%= select_tag "selected_event_id",
+            options_from_collection_for_select(@event_registrations, "id", lambda { |reg| reg.event.title }, @selected_registration&.id),
+            { id: "event-selector" } %>
+            
+      </div>
+    <% else %>
+      <p>You are paying for: <strong><%= @selected_registration.event.title %></strong></p>
+      <%= hidden_field_tag "selected_event_id", @selected_registration.id %>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, value: current_user.name, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :credit_card_no, "Credit Card Number" %><br />
+      <%= f.text_field :credit_no, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :date_of_expiry, "Date of Expiry" %><br />
+      <select name="check[month]" id="check_out_month">
+        <% (1..12).each do |m| %>
+          <option value="<%= m.to_s.rjust(2, '0') %>"><%= Date::MONTHNAMES[m] %></option>
+        <% end %>
+      </select>
+
+      <select name="check[year]" id="check_out_year">
+        <% (2025..2033).each do |y| %>
+          <option value="<%= y %>"><%= y %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="field">
+      <%= f.label :verification_number, "CVV" %><br />
+      <%= f.text_field :verification_number, required: true %>
+    </div>
+
+    <br /><br />
+    
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var eventSelector = document.getElementById("event-selector");
+    var remainingAmountDisplay = document.getElementById("remaining-amount");
+
+    var eventAmounts = {
+      <% @event_registrations.each do |reg| %>
+        "<%= reg.id %>": <%= reg.amount_due - reg.amount_paid %>,
+      <% end %>
+    };
+
+    function updateRemainingAmount() {
+      var selectedEventId = eventSelector ? eventSelector.value : "<%= @selected_registration&.id %>";
+      remainingAmountDisplay.innerText = eventAmounts[selectedEventId] || 0;
+    }
+
+    if (eventSelector) {
+      eventSelector.addEventListener("change", updateRemainingAmount);
+    }
+
+    // ✅ Set the correct amount on page load
+    updateRemainingAmount();
+  });
+</script>
+
