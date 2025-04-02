@@ -16,7 +16,7 @@ class EventRegistrationsController < ApplicationController
   
 
   def create
-    selected_organizer = User.find(params[:selected_organizer_id])  
+    selected_organizer = User.find(params[:event_registration][:organizer_id])  
     success = true
     total_initial_payment = 0.0  
     total_remaining_payment = 0.0 
@@ -34,6 +34,8 @@ class EventRegistrationsController < ApplicationController
       registration = current_user.event_registrations.build(event_reg)
       registration.status = "pending"
       registration.quantity = quantity  # ✅ Assign quantity here
+      registration.organizer_id = selected_organizer.id  # ✅ Assign organizer
+
   
       total_price = event.price * quantity
       initial_payment = (total_price * 0.4).round(2)
@@ -44,8 +46,10 @@ class EventRegistrationsController < ApplicationController
   
       total_initial_payment += initial_payment
       total_remaining_payment += remaining_amount 
+      
   
       unless registration.save
+        Rails.logger.debug "Registration failed: #{registration.errors.full_messages.join(", ")}"
         flash[:alert] = "Registration failed for event: #{event.title}."
         success = false
         break

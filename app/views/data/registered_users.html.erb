@@ -23,7 +23,7 @@
           <td><%= registration.event.title %></td>
           <td><%= registration.user.contact %></td>
           <td><%= registration.date %></td>
-          <td><%= registration.event.organizer&.name || "Not Assigned" %></td>
+          <td><%= registration.organizer&.name || "Not Assigned" %></td>
 
           <td class="<%= registration.status == 'completed' ? 'status-completed' : 'status-pending' %>">
             <%= registration.status %>

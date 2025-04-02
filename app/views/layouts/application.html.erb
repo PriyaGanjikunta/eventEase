@@ -56,28 +56,6 @@
                   <li><%= button_to "LOGIN", new_user_session_path, class: "main_btn" %></li>
                 <% end %>
 
-                
-                <% if user_signed_in? %>
-                  <div>
-                    <!-- Circular Profile Button -->
-                    <button class="profile-circle" id="profileBtn">
-                      <%= current_user.name.first.upcase %>
-                    </button>
-                  </div>
-                <% end %>
-
-                <!-- User Details Modal -->
-                <div id="userModal" class="modal">
-                  <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h3>User Details</h3>
-                    <p><strong>Name:</strong> <%= current_user.name %></p>
-                    <p><strong>Email:</strong> <%= current_user.email %></p>
-                    <p><strong>Contact:</strong> <%= current_user.contact %></p>
-                    <p><strong>Role:</strong> <%= current_user.role %></p>
-                  </div>
-                </div>
-
               </ul>
             </div>
           </div>
